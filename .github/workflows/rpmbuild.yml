@@ -28,20 +28,24 @@ jobs:
     steps:
       - name: checkout cli
         uses: actions/checkout@v2
+        
       - name: get version
         id: get-tag
         run: |
           git pull
           git fetch --tags
-          echo "::set-output name=TAG_NAME::$(git describe --tags $(git rev-list --tags --max-count=1))"
+          echo "::set-output name=TAG_NAME::$(node -p -e "require('./package.json').version")"
+          
+      - name: view directory
+        run: | 
+          ls dist/twilio-v${{ steps.get-tag.outputs.TAG_NAME }}
+          
       - name: generate linux tarball
         run: | 
             npm cache clear & npm ci
             npm install -g @oclif/dev-cli
             oclif-dev pack --targets=linux-x64
-      - name: view directory
-        run: | 
-          ls dist/twilio-v${{ steps.get-tag.outputs.TAG_NAME }}
+
       - name: build rpm
         uses: ./.github/actions/build-rpm
         id: build_rpm
@@ -52,6 +56,7 @@ jobs:
           variables: |
             _version=${{ steps.get-tag.outputs.TAG_NAME }}
            # _foo=bar
+           
       - name: build_rpm outputs
         run: |
           echo rpm_package_name: ${{ steps.build_rpm.outputs.rpm_package_name }}
