@@ -41,24 +41,24 @@ jobs:
       - name: Update Changelog
         run: |
           bash .github/scripts/commit-api-spec-change-log.sh "${{ github.event.inputs.change-log }}" ${{ github.event.inputs.version-type }}
-  release:
-    runs-on: ubuntu-latest
-    needs: [update-api-definitions-changelog]
-    outputs:
-      tag-name: ${{ steps.semantic-release.outputs.TAG_NAME }}
-    steps:
-      - name: Checkout cli
-        uses: actions/checkout@v2
-      - name: Run git and npm update
-        run: |
-          git pull
-          npm install
-      - name: Semantic Release runs
-        id: semantic-release
-        run: npx semantic-release -t \${version}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  # release:
+  #   runs-on: ubuntu-latest
+  #   needs: [update-api-definitions-changelog]
+  #   outputs:
+  #     tag-name: ${{ steps.semantic-release.outputs.TAG_NAME }}
+  #   steps:
+  #     - name: Checkout cli
+  #       uses: actions/checkout@v2
+  #     - name: Run git and npm update
+  #       run: |
+  #         git pull
+  #         npm install
+  #     - name: Semantic Release runs
+  #       id: semantic-release
+  #       run: npx semantic-release -t \${version}
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
   update-release:
     runs-on: ubuntu-latest
     needs: [ release ]
@@ -74,26 +74,26 @@ jobs:
         with:
           is_append_body: true
           body: ${{ github.event.inputs.change-log }}
-  oclif-release:
-    runs-on: ubuntu-latest
-    needs: [ release ]
-    steps:
-      - name: Invoke Oclif workflow
-        if: ${{needs.release.outputs.tag-name != ''}}
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: Oclif Release
-          repo: twilio/twilio-cli
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          inputs: '{ "home-brew-branch": "${{github.event.inputs.homebrew-branch}}", "tag-name": "${{needs.release.outputs.tag-name}}", "pre-release": "${{github.event.inputs.homebrew-prerelease}}"}'
-  docker-release:
-    runs-on: ubuntu-latest
-    needs: [ release ]
-    steps:
-      - name: Invoke Docker workflow
-        if: ${{needs.release.outputs.tag-name != ''}}
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: Docker Hub Release
-          repo: twilio/twilio-cli
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+  # oclif-release:
+  #   runs-on: ubuntu-latest
+  #   needs: [ release ]
+  #   steps:
+  #     - name: Invoke Oclif workflow
+  #       if: ${{needs.release.outputs.tag-name != ''}}
+  #       uses: benc-uk/workflow-dispatch@v1
+  #       with:
+  #         workflow: Oclif Release
+  #         repo: twilio/twilio-cli
+  #         token: ${{ secrets.REPO_ACCESS_TOKEN }}
+  #         inputs: '{ "home-brew-branch": "${{github.event.inputs.homebrew-branch}}", "tag-name": "${{needs.release.outputs.tag-name}}", "pre-release": "${{github.event.inputs.homebrew-prerelease}}"}'
+  # docker-release:
+  #   runs-on: ubuntu-latest
+  #   needs: [ release ]
+  #   steps:
+  #     - name: Invoke Docker workflow
+  #       if: ${{needs.release.outputs.tag-name != ''}}
+  #       uses: benc-uk/workflow-dispatch@v1
+  #       with:
+  #         workflow: Docker Hub Release
+  #         repo: twilio/twilio-cli
+  #         token: ${{ secrets.REPO_ACCESS_TOKEN }}
