@@ -59,21 +59,21 @@ jobs:
   #       env:
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   #         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  update-release:
-    runs-on: ubuntu-latest
-    needs: [ release ]
-    steps:
-      - name: Checkout cli
-        uses: actions/checkout@v2
-      - name: Update release
-        if: ${{needs.release.outputs.tag-name != ''}}
-        uses: tubone24/update_release@v1.2.0
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          TAG_NAME: ${{needs.release.outputs.tag-name}}
-        with:
-          is_append_body: true
-          body: ${{ github.event.inputs.change-log }}
+#   update-release:
+#     runs-on: ubuntu-latest
+#     needs: [ release ]
+#     steps:
+#       - name: Checkout cli
+#         uses: actions/checkout@v2
+#       - name: Update release
+#         if: ${{needs.release.outputs.tag-name != ''}}
+#         uses: tubone24/update_release@v1.2.0
+#         env:
+#           GITHUB_TOKEN: ${{ github.token }}
+#           TAG_NAME: ${{needs.release.outputs.tag-name}}
+#         with:
+#           is_append_body: true
+#           body: ${{ github.event.inputs.change-log }}
   # oclif-release:
   #   runs-on: ubuntu-latest
   #   needs: [ release ]
