@@ -32,8 +32,6 @@ jobs:
       - name: get version
         id: get-tag
         run: |
-          git pull
-          git fetch --tags
           echo "::set-output name=TAG_NAME::$(node -p -e "require('./package.json').version")"
           
       - name: view directory
