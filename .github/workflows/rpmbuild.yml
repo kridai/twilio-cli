@@ -40,7 +40,7 @@ jobs:
             oclif-dev pack --targets=linux-x64
       - name: view directory
         run: | 
-          ls dist
+          ls dist/twilio-v${{ steps.get-tag.outputs.TAG_NAME }}
       - name: build rpm
         uses: ./.github/actions/build-rpm
         id: build_rpm
