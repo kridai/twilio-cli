@@ -38,6 +38,9 @@ jobs:
             npm cache clear & npm ci
             npm install -g @oclif/dev-cli
             oclif-dev pack --targets=linux-x64
+      - name: view directory
+        run: | 
+          ls dist
       - name: build rpm
         uses: ./.github/actions/build-rpm
         id: build_rpm
