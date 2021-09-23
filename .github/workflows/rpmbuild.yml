@@ -34,15 +34,15 @@ jobs:
         run: |
           echo "::set-output name=TAG_NAME::$(node -p -e "require('./package.json').version")"
           
-      - name: view directory
-        run: | 
-          ls dist/twilio-v${{ steps.get-tag.outputs.TAG_NAME }}
-          
       - name: generate linux tarball
         run: | 
             npm cache clear & npm ci
             npm install -g @oclif/dev-cli
             oclif-dev pack --targets=linux-x64
+            
+      - name: view directory
+        run: | 
+          ls dist/twilio-v${{ steps.get-tag.outputs.TAG_NAME }}
 
       - name: build rpm
         uses: ./.github/actions/build-rpm
