@@ -28,9 +28,10 @@ jobs:
     steps:
       - name: checkout cli
         uses: actions/checkout@v2
-      - name: get tag
+      - name: get version
         id: get-tag
         run: |
+          git pull
           git fetch --tags
           echo "::set-output name=TAG_NAME::$(git describe --tags $(git rev-list --tags --max-count=1))"
       - name: generate linux tarball
