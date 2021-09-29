@@ -54,6 +54,7 @@ jobs:
           ASSET_NAME: ${{ steps.build_rpm.outputs.rpm_package_name }}
           TAG_NAME: ${{ steps.get-tag.outputs.TAG_NAME }}
           REPO_NAME: twilio/twilio-cli
+          OVERWRITE: true
 
         
 
