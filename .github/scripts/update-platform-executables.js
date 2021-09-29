@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const { GitHub } = require('@actions/github');
+import {Octokit} from '@octokit/core'
 const fs = require('fs');
 
 /**
@@ -85,7 +86,8 @@ const updatePlatformExecutables = async () => {
     }
 
     core.debug(`Uploading ${file} to ${assetName} in release ${tag}.`)
-    const uploaded_asset = await github.repos.uploadReleaseAsset(
+    const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
+    const uploaded_asset = await octokit.repos.uploadReleaseAsset(
       {
         url: oldUploadUrl,
         name: assetName,
