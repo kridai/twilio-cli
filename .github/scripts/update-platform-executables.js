@@ -87,7 +87,7 @@ const updatePlatformExecutables = async () => {
 
     core.debug(`Uploading ${file} to ${assetName} in release ${tag}.`)
     const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
-    const uploaded_asset = await octokit.repos.uploadReleaseAsset(
+    const uploaded_asset = await github.repos.uploadReleaseAsset(
       {
         url: oldUploadUrl,
         name: assetName,
