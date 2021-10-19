@@ -35,7 +35,12 @@ mkdir -p %{buildroot}/usr/local/lib/%{name}
 mkdir -p %{buildroot}/usr/local/bin
 cp -a $RPM_BUILD_DIR/%{name}/* %{buildroot}/usr/local/lib/%{name}
 cd %{buildroot}
+#ln -sf /usr/local/lib/twilio/bin/twilio /usr/local/bin/twilio
+
+ %post
 ln -sf /usr/local/lib/twilio/bin/twilio /usr/local/bin/twilio
+ %postun
+-%{__rm} -f /usr/local/bin/twilio
 
 %clean
 rm -rf %{buildroot}/%{name}-%{version}
