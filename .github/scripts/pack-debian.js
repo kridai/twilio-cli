@@ -80,8 +80,8 @@ eval $(node -p "require('./package').scripts.postinstall")
       await qq.chmod([workspace, 'usr/lib', config.dirname, 'bin', config.bin], 0o755)
       await qq.chmod([workspace, 'DEBIAN/postinst'], 0o755)
       await qq.x(`ln -s "../lib/${config.dirname}/bin/${config.bin}" "${workspace}/usr/bin/${pjson.oclif.bin}"`)
-      await qq.x(`chown -R root "${workspace}"`)
-      await qq.x(`chgrp -R root "${workspace}"`)
+      //await qq.x(`chown -R root "${workspace}"`)
+      //await qq.x(`chgrp -R root "${workspace}"`)
       await qq.x(`dpkg --build "${workspace}" "${qq.join(dist, debArch(arch), `${versionedDebBase}.deb`)}"`)
     }
     for (const a of arch) {
