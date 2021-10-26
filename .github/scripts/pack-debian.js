@@ -5,7 +5,6 @@ var S3 = require('aws-sdk/clients/s3');
 
 function debArch(arch) {
   if (arch === 'x64') return 'amd64'
-  if (arch === 'x86') return 'i386'
   if (arch === 'arm') return 'armel'
   throw new Error(`invalid arch: ${arch}`)
 }
@@ -63,7 +62,7 @@ eval $(node -p "require('./package').scripts.postinstall")
       dirname: pjson.name
     }
 
-    if (process.platform !== 'linux') throw new Error('must be run from linux')
+  //  if (process.platform !== 'linux') throw new Error('must be run from linux')
     const debVersion = `${pjson.version.split('-')[0]}-1`;
     //const {flags} = this.parse(PackDeb)
     // const buildConfig = await Tarballs.buildConfig(flags.root)
@@ -97,7 +96,9 @@ eval $(node -p "require('./package').scripts.postinstall")
       await qq.x(`chgrp -R root "${workspace}"`)
       await qq.x(`dpkg --build "${workspace}" "${qq.join(dist, debArch(arch), `${versionedDebBase}.deb`)}"`)
     }
-    await build(arch);
+    for(const a of arch) {
+      await build(a);
+    }
     await qq.x('apt-ftparchive packages . > Packages', {cwd: dist})
     await qq.x('gzip -c Packages > Packages.gz', {cwd: dist})
     await qq.x('bzip2 -k Packages', {cwd: dist})
