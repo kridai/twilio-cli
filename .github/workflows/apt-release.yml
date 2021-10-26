@@ -27,9 +27,15 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
         aws-region: us-east-1
+
+    - name: generate linux tarball
+      run: |
+        npm cache clear & npm install
+        npm install -g @oclif/dev-cli
+        oclif-dev pack --targets=linux-x64
+        
     - name: Build Deb Package
       run: | 
-        npx oclif-dev pack -t linux-x64
         node .github/scripts/pack-debian x64
         aws cp /dist/deb s3://${BUCKET_ID}/${KEY} --recursive -acl public-read
 
