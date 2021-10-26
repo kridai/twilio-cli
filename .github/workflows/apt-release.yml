@@ -53,9 +53,5 @@ jobs:
           SLACK_USERNAME: CLI Release Bot
           SLACK_ICON_EMOJI: ":ship:"
           SLACK_TITLE: "Twilio Cli"
-<<<<<<< HEAD
           SLACK_MESSAGE: 'APT Release Failed'
-=======
-          SLACK_MESSAGE: 'RPM Build Failed'
->>>>>>> 072155c7cef236ad0a50b52f102dafb5b343cfe4
           MSG_MINIMAL: actions url
