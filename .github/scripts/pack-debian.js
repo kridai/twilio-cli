@@ -84,7 +84,7 @@ eval $(node -p "require('./package').scripts.postinstall")
     }
     for (const a of arch) {
       await build(a);
-      await qq.x(`apt-ftparchive packages ${debArch(arch)}/ > Packages`, {cwd: dist})
+      await qq.x(`apt-ftparchive packages ${debArch(a)}/ >> Packages`, {cwd: dist})
     } 
     await qq.x('gzip -c Packages > Packages.gz', {cwd: dist})
     await qq.x('bzip2 -k Packages', {cwd: dist})
