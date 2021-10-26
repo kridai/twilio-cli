@@ -80,15 +80,12 @@ eval $(node -p "require('./package').scripts.postinstall")
       await qq.chmod([workspace, 'usr/lib', config.dirname, 'bin', config.bin], 0o755)
       await qq.chmod([workspace, 'DEBIAN/postinst'], 0o755)
       await qq.x(`ln -s "../lib/${config.dirname}/bin/${config.bin}" "${workspace}/usr/bin/${pjson.oclif.bin}"`)
-      //await qq.x(`chown -R root "${workspace}"`)
-      //await qq.x(`chgrp -R root "${workspace}"`)
       await qq.x(`dpkg --build "${workspace}" "${qq.join(dist, debArch(arch), `${versionedDebBase}.deb`)}"`)
     }
     for (const a of arch) {
       await build(a);
+      await qq.x(`apt-ftparchive packages ${debArch(arch)}/ > Packages`, {cwd: dist})
     } 
-    //const distArch = qq.join(dist, debArch(a));
-    await qq.x(`apt-ftparchive packages .> Packages`, {cwd: dist})
     await qq.x('gzip -c Packages > Packages.gz', {cwd: dist})
     await qq.x('bzip2 -k Packages', {cwd: dist})
     await qq.x('xz -k Packages', {cwd: dist})
