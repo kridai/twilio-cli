@@ -15,7 +15,6 @@ jobs:
     steps:
       - name: checkout cli
         uses: actions/checkout@v2
-
       - name: get version
         id: get-tag
         run: |
@@ -40,7 +39,6 @@ jobs:
           gpg_signing_key_id: ${{ secrets.GPG_SIGNING_KEY_ID }}
           gpg_signing_key_passphrase: ${{ secrets.GPG_SIGNING_KEY_PASSPHRASE }}
           gpg_pub_key: .github/rpm/gpg_pub.asc
-
       - name: build_rpm outputs
         run: |
           echo rpm_package_name: ${{ steps.build_rpm.outputs.rpm_package_name }}
