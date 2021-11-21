@@ -17,15 +17,15 @@ jobs:
        run: |
         git fetch --prune --unshallow
         echo "::set-output name=TAG_NAME::$(git describe --tags $(git rev-list --tags --max-count=1))"
-#   pack-windows-release:
-#     runs-on: macos-latest
-#     needs: [get-tag]
-#     steps:
-#      - uses: actions/checkout@v2
-#      - run: |
-#         make install
-#         brew install makensis
-#         npx oclif-dev pack:win
+  pack-windows-release:
+    runs-on: macos-latest
+    needs: [get-tag]
+    steps:
+     - uses: actions/checkout@v2
+     - run: |
+        make install
+        brew install makensis
+        npx oclif-dev pack:win
 #      - name: upload artifact
 #      - uses: actions/upload-artifact@v2
 #        with:
