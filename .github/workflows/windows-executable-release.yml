@@ -30,7 +30,7 @@ jobs:
        uses: actions/upload-artifact@v2
        with:
         name: ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
-        path: dist/${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
+        path: dist/win/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
 
 #   sign-windows-release:
 #     needs: [pack-windows-release]
