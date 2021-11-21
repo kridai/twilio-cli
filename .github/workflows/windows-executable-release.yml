@@ -37,7 +37,7 @@ jobs:
     runs-on: windows-latest
     steps:
      - name: import certificate
-     - run: |
+       run: |
         New-Item -ItemType directory -Path certificate
         Set-Content -Path certificate\certificate.txt -Value '${{ secrets.WINDOWS_CERTIFICATE }}'
         certutil -decode certificate\certificate.txt certificate\certificate.pfx
