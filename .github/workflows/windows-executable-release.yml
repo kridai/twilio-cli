@@ -26,11 +26,11 @@ jobs:
         make install
         brew install makensis
         npx oclif-dev pack:win
-#      - name: upload artifact
-#      - uses: actions/upload-artifact@v2
-#        with:
-#         name: ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
-#         path: dist/${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
+     - name: upload artifact
+       uses: actions/upload-artifact@v2
+       with:
+        name: ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
+        path: dist/${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
 
 #   sign-windows-release:
 #     needs: [pack-windows-release]
