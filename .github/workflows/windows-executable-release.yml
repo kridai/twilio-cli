@@ -52,6 +52,7 @@ jobs:
        run: |
           & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.WINDOWS_CERTIFICATE_PASS }}' /t http://timestamp.digicert.com ${{steps.download.outputs.download-path}}\${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
      - uses: actions/checkout@v2
+     - run: make install
      - name: Upload binaries to release
        run: node .github/scripts/update-platform-executables.js
        env:
