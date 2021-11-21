@@ -5,7 +5,6 @@ on:
       formula:
         description: 'Artifact Prefix'
         default: twilio
-        required: true
 jobs:
   get-tag:
     runs-on: macos-latest
@@ -18,19 +17,20 @@ jobs:
        run: |
         git fetch --prune --unshallow
         echo "::set-output name=TAG_NAME::$(git describe --tags $(git rev-list --tags --max-count=1))"
-  pack-windows-release:
-    runs-on: macos-latest
-    steps:
-     - uses: actions/checkout@v2
-     - run: |
-        make install
-        brew install makensis
-        npx oclif-dev pack:win
-     - name: upload artifact
-     - uses: actions/upload-artifact@v2
-       with:
-        name: ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
-        path: dist/${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
+#   pack-windows-release:
+#     runs-on: macos-latest
+#     needs: [get-tag]
+#     steps:
+#      - uses: actions/checkout@v2
+#      - run: |
+#         make install
+#         brew install makensis
+#         npx oclif-dev pack:win
+#      - name: upload artifact
+#      - uses: actions/upload-artifact@v2
+#        with:
+#         name: ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
+#         path: dist/${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
 
 #   sign-windows-release:
 #     needs: [pack-windows-release]
