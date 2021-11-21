@@ -32,30 +32,30 @@ jobs:
         name: ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
         path: dist/${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
 
-  sign-windows-release:
-    needs: [pack-windows-release]
-    runs-on: windows-latest
-    steps:
-     - name: import certificate
-     - run: |
-        New-Item -ItemType directory -Path certificate
-        Set-Content -Path certificate\certificate.txt -Value '${{ secrets.WINDOWS_CERTIFICATE }}'
-        certutil -decode certificate\certificate.txt certificate\certificate.pfx
-     - name: import Executable
-     - uses: actions/download-artifact@v2
-       with:
-         name: ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
-     - name: Code Sign The Executable
-     - run: |
-          & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.WUNDOWS_CERTIFICATE_PASS }}' /t http://timestamp.digicert.com ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
-     - name: Upload binaries to release
-       run: node .github/scripts/update-platform-executables.js
-       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        FILE: dist/${{ matrix.artifact_name }}
-        ASSET_NAME: ${{ matrix.asset_name }}
-        TAG_NAME: ${{ needs.get-tag.outputs.TAG_NAME }}
-        REPO_NAME: twilio/twilio-cli
+#   sign-windows-release:
+#     needs: [pack-windows-release]
+#     runs-on: windows-latest
+#     steps:
+#      - name: import certificate
+#      - run: |
+#         New-Item -ItemType directory -Path certificate
+#         Set-Content -Path certificate\certificate.txt -Value '${{ secrets.WINDOWS_CERTIFICATE }}'
+#         certutil -decode certificate\certificate.txt certificate\certificate.pfx
+#      - name: import Executable
+#      - uses: actions/download-artifact@v2
+#        with:
+#          name: ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
+#      - name: Code Sign The Executable
+#      - run: |
+#           & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.WUNDOWS_CERTIFICATE_PASS }}' /t http://timestamp.digicert.com ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
+#      - name: Upload binaries to release
+#        run: node .github/scripts/update-platform-executables.js
+#        env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         FILE: dist/${{ matrix.artifact_name }}
+#         ASSET_NAME: ${{ matrix.asset_name }}
+#         TAG_NAME: ${{ needs.get-tag.outputs.TAG_NAME }}
+#         REPO_NAME: twilio/twilio-cli
 
   notify-complete-fail:
     if: ${{ failure() || cancelled() }}
