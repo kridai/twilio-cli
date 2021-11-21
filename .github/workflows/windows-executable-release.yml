@@ -33,7 +33,7 @@ jobs:
         path: dist/win/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
 
   sign-windows-release:
-    needs: [pack-windows-release]
+    needs: [pack-windows-release, get-tag]
     runs-on: windows-latest
     steps:
      - name: import certificate
