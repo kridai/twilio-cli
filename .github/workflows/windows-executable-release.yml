@@ -30,6 +30,7 @@ jobs:
        uses: actions/cache@v2
        with:
         path: dist/win/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
+        key: ${{ github.sha }}
 #      - name: upload artifact
 #        uses: actions/upload-artifact@v2
 #        with:
@@ -45,13 +46,18 @@ jobs:
         New-Item -ItemType directory -Path certificate
         Set-Content -Path certificate\certificate.txt -Value '${{ secrets.WINDOWS_CERTIFICATE }}'
         certutil -decode certificate\certificate.txt certificate\certificate.pfx
+     - name: restore cache
+       uses: actions/cache@v2
+       with:
+        path: dist/win/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
+        key: ${{ github.sha }}
 #      - name: import Executable
 #        id: download
 #        uses: actions/download-artifact@v2
 #        with:
 #          name: ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
-     - name: 'Echo download path'
-       run: ls ${{steps.download.outputs.download-path}}
+#      - name: 'Echo download path'
+#        run: ls ${{steps.download.outputs.download-path}}
      - name: Code Sign The Executable
        run: |
           & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.WINDOWS_CERTIFICATE_PASS }}' /t http://timestamp.digicert.com dist/win/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
