@@ -29,7 +29,7 @@ jobs:
      - name: Cache Executable
        uses: actions/cache@v2
        with:
-        path: dist/win/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
+        path: dist/win
         key: ${{ github.sha }}
 #      - name: upload artifact
 #        uses: actions/upload-artifact@v2
@@ -49,7 +49,7 @@ jobs:
      - name: restore cache
        uses: actions/cache@v2
        with:
-        path: dist/win/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
+        path: dist/win
         key: ${{ github.sha }}
 #      - name: import Executable
 #        id: download
