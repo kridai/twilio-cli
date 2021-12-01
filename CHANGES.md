@@ -1,4 +1,73 @@
-### [2.32.1](https://github.com/twilio/twilio-cli/compare/2.32.0...2.32.1) (2021-10-19)
+## [2.34.0](https://github.com/twilio/twilio-cli/compare/2.33.0...2.34.0) (2021-11-18)
+
+
+### Library - Fixes
+
+* Added changes for lcov ([#319](https://github.com/twilio/twilio-cli/issues/319)) ([43cc6ad](https://github.com/twilio/twilio-cli/commit/43cc6adefea72c08f63bea1574fab35ffa6ded54))
+* Disable hyperlinks in Ubuntu ([#329](https://github.com/twilio/twilio-cli/issues/329)) ([14f7cb3](https://github.com/twilio/twilio-cli/commit/14f7cb3560a02091550d5f26c86bfd19ca8a1607))
+* reverting changes for the RPM build ([#326](https://github.com/twilio/twilio-cli/issues/326)) ([c9eaad8](https://github.com/twilio/twilio-cli/commit/c9eaad8e9cbdf0d36e5d7662daee55dfa4608f1d))
+* updating release steps to fetch latest dependencies ([#332](https://github.com/twilio/twilio-cli/issues/332)) ([ece2b9f](https://github.com/twilio/twilio-cli/commit/ece2b9f397ffd18d74f90c38e17e74c920ca8548))
+
+
+### Library - Features
+
+* adding workflow for apt release ([#320](https://github.com/twilio/twilio-cli/issues/320)) ([bdfab17](https://github.com/twilio/twilio-cli/commit/bdfab17174a232a1cb2891f709ca24d34104eea1))
+
+
+### Library - Chores
+
+* update slack alerts color ([#336](https://github.com/twilio/twilio-cli/issues/336)) ([ba5ee89](https://github.com/twilio/twilio-cli/commit/ba5ee89ca59b283e5370327c3ca3494a8b2aec84))
+
+---------------------------
+**Frontline**
+- Added  to User's resource
+
+**Messaging**
+- Added GET vetting API
+
+**Verify**
+- Add  to the attempts API.
+- Allow to update  from  to  or  and viceversa for Verify Push
+- Add  as a valid  value for Verify Push
+
+**Twiml**
+- Add supported SSML children to , , , , , and .## [2.33.0](https://github.com/twilio/twilio-cli/compare/2.32.1...2.33.0) (2021-11-04)
+
+
+### Library - Features
+
+* Added the tests and sonarcloud jobs ([#312](https://github.com/twilio/twilio-cli/issues/312)) ([bfc7d57](https://github.com/twilio/twilio-cli/commit/bfc7d573919c6beb23acd9844a923cbf3fb885d4))
+
+
+### Library - Fixes
+
+* Fixing the release issue ([#313](https://github.com/twilio/twilio-cli/issues/313)) ([b893be6](https://github.com/twilio/twilio-cli/commit/b893be61f0ca1543b8f8c5d0728ea1b7fcdfdbed))
+* Pin peer dependency semantic-release ([#318](https://github.com/twilio/twilio-cli/issues/318)) ([00ac1d8](https://github.com/twilio/twilio-cli/commit/00ac1d8809b8c410445be67a7dc6f5154c2452de))
+
+
+### Library - Chores
+
+* Add xz compression for tarballs ([#321](https://github.com/twilio/twilio-cli/issues/321)) ([9bd5494](https://github.com/twilio/twilio-cli/commit/9bd5494264600ace8bd27752a1da59fecf53eda9))
+
+---------------------------
+**Library - Chore**
+- [PR #46](https://github.com/twilio/twilio-oai/pull/46): migrate from travis over to gh actions. Thanks to [@shwetha-manvinkurke](https://github.com/shwetha-manvinkurke)!
+
+**Api**
+- Updated  property to be treated as PII
+
+**Messaging**
+- Added a new enum for brand registration status named DELETED **(breaking change)**
+- Add a new K12_EDUCATION use case in us_app_to_person_usecase api transaction
+- Added a new enum for brand registration status named IN_REVIEW
+
+**Serverless**
+- Add node14 as a valid Build runtime
+
+**Verify**
+- Fix typos in Verify Push Factor documentation for the  parameter.
+- Added  on verification creation
+- Make  parameter public for Verification resource and  parameter public for Service resource. **(breaking change)**### [2.32.1](https://github.com/twilio/twilio-cli/compare/2.32.0...2.32.1) (2021-10-19)
 
 
 ### Library - Fixes
