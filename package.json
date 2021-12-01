@@ -126,7 +126,7 @@
       "sign": "Developer ID Installer: Twilio, Inc."
     },
     "update": {
-      "s3": 
+      "s3": {
         "xz": true,
         "bucket": "twilio-cli-prod"
       }
