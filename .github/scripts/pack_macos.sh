@@ -9,7 +9,8 @@ import_certificate() {
     echo -n "$OSX_INSTALLER_CERT_BASE64" | base64 --decode --output $CERTIFICATE_PATH
     # create temporary keychain
     OSX_KEYCHAIN_PASSWORD=passphrase
-    security create-keychain -pf "$OSX_KEYCHAIN_PASSWORD" build.keychain
+    security list-keychains
+    security create-keychain -p "$OSX_KEYCHAIN_PASSWORD" build.keychain
     security default-keychain -s build.keychain
     security unlock-keychain -p "$OSX_KEYCHAIN_PASSWORD" build.keychain
     security import $CERTIFICATE_PATH -k build.keychain -A -P $OSX_INSTALLER_CERT_PASSWORD -T /usr/bin/codesign
@@ -42,6 +43,6 @@ pack_macos() {
     notarize_and_staple
 }
 
-make install
-brew install makensis
+#make install
+#brew install makensis
 pack_macos
