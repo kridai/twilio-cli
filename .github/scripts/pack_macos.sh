@@ -5,16 +5,16 @@
 import_certificate() {
     echo "runner them is " $RUNNER_TEMP
     CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+    KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
     # import certificate from secrets
     echo -n "$OSX_INSTALLER_CERT_BASE64" | base64 --decode --output $CERTIFICATE_PATH
     # create temporary keychain
     OSX_KEYCHAIN_PASSWORD=passphrase
     security list-keychains
-    security create-keychain -p "$OSX_KEYCHAIN_PASSWORD" build.keychain
-    security default-keychain -s build.keychain
-    security unlock-keychain -p "$OSX_KEYCHAIN_PASSWORD" build.keychain
-    security import $CERTIFICATE_PATH -k build.keychain -A -P $OSX_INSTALLER_CERT_PASSWORD -T /usr/bin/codesign
-    security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k $OSX_KEYCHAIN_PASSWORD build.keychain
+    security create-keychain -p "$OSX_KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+    security unlock-keychain -p "$OSX_KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+    security default-keychain -s $KEYCHAIN_PATH
+    security import $CERTIFICATE_PATH -k $KEYCHAIN_PATH -A -P $OSX_INSTALLER_CERT_PASSWORD -t cert -f pkcs12
 }
 notarize_and_staple() {
     #Functionality  to notarize application
