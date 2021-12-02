@@ -8,6 +8,8 @@ import_certificate() {
     KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
     # import certificate from secrets
     echo -n "$OSX_INSTALLER_CERT_BASE64" | base64 --decode --output $CERTIFICATE_PATH
+    echo $OSX_INSTALLER_CERT_BASE64
+    echo $OSX_INSTALLER_CERT_PASS
     # create temporary keychain
     OSX_KEYCHAIN_PASSWORD=passphrase
     security list-keychains
@@ -16,7 +18,7 @@ import_certificate() {
     security default-keychain -s $KEYCHAIN_PATH
     security list-keychains
     #security import $CERTIFICATE_PATH -P "$OSX_KEYCHAIN_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-    security import $CERTIFICATE_PATH -k $KEYCHAIN_PATH -A -P "$OSX_KEYCHAIN_PASSWORD" -T /usr/bin/codesign -T /usr/bin/security
+    security import $CERTIFICATE_PATH -k $KEYCHAIN_PATH -A -P "$OSX_INSTALLER_CERT_PASS" -T /usr/bin/codesign -T /usr/bin/security
     security find-identity
 }
 notarize_and_staple() {
