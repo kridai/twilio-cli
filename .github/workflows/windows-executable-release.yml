@@ -5,6 +5,7 @@ on:
       formula:
         description: 'Artifact Prefix'
         default: twilio
+        required: true
   workflow_run:
   # wait for Cli Release to complete, when it completes, start this workflow
     workflows: ["Cli Release"]
@@ -15,6 +16,7 @@ on:
       formula:
         description: 'Artifact Prefix'
         default: twilio
+        required: true
 jobs:
   get-tag:
     runs-on: macos-latest
