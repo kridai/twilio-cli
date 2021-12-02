@@ -28,10 +28,10 @@ jobs:
     runs-on: macos-11
     steps:
     - uses: actions/checkout@v2
-    - uses: apple-actions/import-codesign-certs@v1
-      with: 
-        p12-file-base64: ${{ secrets.OSX_INSTALLER_CERT_BASE64 }}
-        p12-password: ${{ secrets.OSX_INSTALLER_CERT_PASSWORD }}
+#     - uses: apple-actions/import-codesign-certs@v1
+#       with: 
+#         p12-file-base64: ${{ secrets.OSX_INSTALLER_CERT_BASE64 }}
+#         p12-password: ${{ secrets.OSX_INSTALLER_CERT_PASSWORD }}
 #     - name: import cert
 #       run: | 
 #           echo "runner them is " $RUNNER_TEMP
