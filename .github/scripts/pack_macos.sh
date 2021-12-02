@@ -10,13 +10,12 @@ import_certificate() {
     echo -n "$OSX_INSTALLER_CERT_BASE64" | base64 --decode --output $CERTIFICATE
     echo $OSX_INSTALLER_CERT_BASE64
     echo $OSX_INSTALLER_CERT_PASS
-    ls $RUNNER_TEMP
     # create temporary keychain
     OSX_KEYCHAIN_PASSWORD="passphrase"
     security list-keychains
     security create-keychain -p "$OSX_KEYCHAIN_PASSWORD" $KEYCHAIN
     security unlock-keychain -p "$OSX_KEYCHAIN_PASSWORD" $KEYCHAIN
-    security default-keychain -s $KEYCHAIN
+    ls $RUNNER_TEMP
     security list-keychains
     #security import $CERTIFICATE_PATH -P "$OSX_KEYCHAIN_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
     security import $CERTIFICATE -k $KEYCHAIN -f pkcs12 -A -T /usr/bin/codesign -T /usr/bin/security -P $OSX_INSTALLER_CERT_PASSWORD
