@@ -1,11 +1,6 @@
 name: Windows Executable Release
 on:
   workflow_dispatch:
-    inputs:
-      formula:
-        description: 'Artifact Prefix'
-        default: twilio
-        required: true
   workflow_run:
   # wait for Cli Release to complete, when it completes, start this workflow
     workflows: ["Cli Release"]
@@ -13,7 +8,7 @@ on:
     types:
       - completed
 env:
-  FORMULA_NAME: ${{ github.event.inputs.formula || 'twilio' }}
+  FORMULA_NAME: 'twilio'
   
 jobs:
   get-tag:
@@ -40,7 +35,7 @@ jobs:
        uses: actions/upload-artifact@v2
        with:
         name: ${{env.FORMULA_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
-        path: dist/win/twilio-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
+        path: dist/win/${{env.FORMULA_NAME}}-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
         retention-days: 1
 
   sign-windows-release:
