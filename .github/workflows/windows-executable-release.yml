@@ -40,7 +40,7 @@ jobs:
        uses: actions/upload-artifact@v2
        with:
         name: ${{env.FORMULA_NAME}}-${{ needs.get-tag.outputs.TAG_NAME }}.exe
-        path: dist/win/${{env.FORMULA_NAME}}-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
+        path: dist/win/twilio-v${{ needs.get-tag.outputs.TAG_NAME }}-x86.exe
         retention-days: 1
 
   sign-windows-release:
