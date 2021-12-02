@@ -11,10 +11,6 @@ on:
     branches: [main]
     types:
       - completed
-    inputs:
-      formula:
-        description: 'Artifact Prefix'
-        default: twilio
 jobs:
   get-tag:
     runs-on: macos-latest
@@ -52,10 +48,16 @@ jobs:
           security unlock-keychain -p "$OSX_KEYCHAIN_PASSWORD" $KEYCHAIN
           ls $RUNNER_TEMP
           security list-keychains
-          #security import $CERTIFICATE_PATH -P "$OSX_KEYCHAIN_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN
           security import $CERTIFICATE -k $KEYCHAIN -f pkcs12 -A -T /usr/bin/codesign -T /usr/bin/security -P "$OSX_INSTALLER_CERT_PASSWORD"
           #security import $CERTIFICATE_PATH -k $KEYCHAIN_PATH -A -P $OSX_INSTALLER_CERT_PASSWORD -T /usr/bin/codesign -T /usr/bin/security
           security find-identity
+      env:
+        OSX_INSTALLER_CERT_BASE64: ${{ secrets.OSX_INSTALLER_CERT_BASE64}}
+        OSX_INSTALLER_CERT_PASSWORD: ${{ secrets.OSX_INSTALLER_CERT_PASSWORD}}
+        APPLE_ID: ${{ secrets.APPLE_ID}}
+        APPLE_ID_APP_PASSWORD: ${{ secrets.APPLE_ID_APP_PASSWORD}}
+        APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID}}
+        FILE_PATH: dist/macos/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}.pkg
     - run: sh .github/scripts/pack_macos.sh
       env:
         OSX_INSTALLER_CERT_BASE64: ${{ secrets.OSX_INSTALLER_CERT_BASE64}}
