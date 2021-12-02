@@ -16,7 +16,7 @@ import_certificate() {
     security default-keychain -s $KEYCHAIN_PATH
     security list-keychains
     #security import $CERTIFICATE_PATH -P "$OSX_KEYCHAIN_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-    security import $CERTIFICATE_PATH -k $KEYCHAIN_PATH -A -P "$OSX_KEYCHAIN_PASSWORD" -T /usr/bin/codesign
+    security import $CERTIFICATE_PATH -k $KEYCHAIN_PATH -A -P "$OSX_KEYCHAIN_PASSWORD" -T /usr/bin/codesign -T /usr/bin/security
     security find-identity
 }
 notarize_and_staple() {
