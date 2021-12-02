@@ -49,6 +49,6 @@ pack_macos() {
     notarize_and_staple
 }
 
-#make install
-#brew install makensis
+make install
+brew install makensis
 pack_macos
