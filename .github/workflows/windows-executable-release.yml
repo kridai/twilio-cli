@@ -10,8 +10,11 @@ on:
   # wait for Cli Release to complete, when it completes, start this workflow
     workflows: ["Cli Release"]
     branches: [main]
+    types:
+      - completed
 env:
   FORMULA_NAME: ${{ github.event.inputs.formula || 'twilio' }}
+  
 jobs:
   get-tag:
     runs-on: macos-latest
