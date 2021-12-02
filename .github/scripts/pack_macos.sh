@@ -5,7 +5,7 @@
 import_certificate() {
     echo "runner them is " $RUNNER_TEMP
     CERTIFICATE=$RUNNER_TEMP/certificate.p12
-    OSX_KEYCHAIN=$RUNNER_TEMP/app-signing.keychain
+    OSX_KEYCHAIN=$RUNNER_TEMP/app-signing.keychain-db
     # import certificate from secrets
     echo -n "$OSX_INSTALLER_CERT_BASE64" | base64 --decode --output $CERTIFICATE
     echo $OSX_INSTALLER_CERT_BASE64
@@ -15,6 +15,7 @@ import_certificate() {
     security list-keychains
     security create-keychain -p "$OSX_KEYCHAIN_PASSWORD" $OSX_KEYCHAIN
     security unlock-keychain -p "$OSX_KEYCHAIN_PASSWORD" $OSX_KEYCHAIN 
+    security set-keychain-settings -lut 21600 $OSX_KEYCHAIN
     ls $RUNNER_TEMP
     security list-keychains
     security import $CERTIFICATE -k $OSX_KEYCHAIN -f pkcs12 -A -T /usr/bin/codesign -T /usr/bin/security -P "$OSX_INSTALLER_CERT_PASSWORD"
