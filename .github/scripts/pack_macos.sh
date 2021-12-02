@@ -5,7 +5,7 @@
 import_certificate() {
     echo "runner them is " $RUNNER_TEMP
     CERTIFICATE=$RUNNER_TEMP/certificate.p12
-    KEYCHAIN=$RUNNER_TEMP/app-signing.keychain
+    OSX_KEYCHAIN=$RUNNER_TEMP/app-signing.keychain
     # import certificate from secrets
     echo -n "$OSX_INSTALLER_CERT_BASE64" | base64 --decode --output $CERTIFICATE
     echo $OSX_INSTALLER_CERT_BASE64
@@ -13,11 +13,12 @@ import_certificate() {
     # create temporary keychain
     OSX_KEYCHAIN_PASSWORD="passphrase"
     security list-keychains
-    security create-keychain -p "$OSX_KEYCHAIN_PASSWORD" $KEYCHAIN
-    security unlock-keychain -p "$OSX_KEYCHAIN_PASSWORD" $KEYCHAIN
+    security create-keychain -p "$OSX_KEYCHAIN_PASSWORD" $OSX_KEYCHAIN
+    security unlock-keychain -p "$OSX_KEYCHAIN_PASSWORD" $OSX_KEYCHAIN 
     ls $RUNNER_TEMP
     security list-keychains
-    security import $CERTIFICATE -k $KEYCHAIN -f pkcs12 -A -T /usr/bin/codesign -T /usr/bin/security -P "$OSX_INSTALLER_CERT_PASSWORD"
+    security import $CERTIFICATE -k $OSX_KEYCHAIN -f pkcs12 -A -T /usr/bin/codesign -T /usr/bin/security -P "$OSX_INSTALLER_CERT_PASSWORD"
+    security set-key-partition-list -S apple-tool:,apple: -k "$OSX_KEYCHAIN_PASSWORD" $OSX_KEYCHAIN
     #security import $CERTIFICATE_PATH -k $KEYCHAIN_PATH -A -P $OSX_INSTALLER_CERT_PASSWORD -T /usr/bin/codesign -T /usr/bin/security
     security find-identity
 }
