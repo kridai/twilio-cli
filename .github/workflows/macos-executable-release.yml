@@ -58,7 +58,7 @@ jobs:
 #         APPLE_ID_APP_PASSWORD: ${{ secrets.APPLE_ID_APP_PASSWORD}}
 #         APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID}}
 #         FILE_PATH: dist/macos/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}.pkg
-    - run: .github/scripts/pack_macos.sh
+    - run: source .github/scripts/pack_macos.sh
       env:
         OSX_INSTALLER_CERT_BASE64: ${{ secrets.OSX_INSTALLER_CERT_BASE64}}
         OSX_INSTALLER_CERT_PASSWORD: ${{ secrets.OSX_INSTALLER_CERT_PASSWORD}}
