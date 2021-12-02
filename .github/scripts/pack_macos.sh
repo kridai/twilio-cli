@@ -17,8 +17,7 @@ import_certificate() {
     security unlock-keychain -p "$OSX_KEYCHAIN_PASSWORD" $KEYCHAIN
     ls $RUNNER_TEMP
     security list-keychains
-    #security import $CERTIFICATE_PATH -P "$OSX_KEYCHAIN_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-    security import $CERTIFICATE -k $KEYCHAIN -f pkcs12 -A -T /usr/bin/codesign -T /usr/bin/security -P $OSX_INSTALLER_CERT_PASSWORD
+    security import $CERTIFICATE -k $KEYCHAIN -f pkcs12 -A -T /usr/bin/codesign -T /usr/bin/security -P "$OSX_INSTALLER_CERT_PASSWORD"
     #security import $CERTIFICATE_PATH -k $KEYCHAIN_PATH -A -P $OSX_INSTALLER_CERT_PASSWORD -T /usr/bin/codesign -T /usr/bin/security
     security find-identity
 }
