@@ -5,13 +5,14 @@
 import_certificate() {
     echo "runner them is " $RUNNER_TEMP
     CERTIFICATE_PATH=$RUNNER_TEMP/certificate.p12
-    KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+    KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain
     # import certificate from secrets
     echo -n "$OSX_INSTALLER_CERT_BASE64" | base64 --decode --output $CERTIFICATE_PATH
     echo $OSX_INSTALLER_CERT_BASE64
     echo $OSX_INSTALLER_CERT_PASS
+    ls $CERTIFICATE_PATH
     # create temporary keychain
-    OSX_KEYCHAIN_PASSWORD=passphrase
+    OSX_KEYCHAIN_PASSWORD="passphrase"
     security list-keychains
     security create-keychain -p "$OSX_KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
     security unlock-keychain -p "$OSX_KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
