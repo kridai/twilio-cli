@@ -40,6 +40,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           make install
+          sudo npm cache clean --force
           sudo npx oclif-dev pack:deb
       - name: Upload binaries to release
         run: node .github/scripts/update-platform-executables.js
