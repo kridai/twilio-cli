@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           make install
-          npx oclif-dev pack:deb
+          sudo npx oclif-dev pack:deb
       - name: Upload binaries to release
         run: node .github/scripts/update-platform-executables.js
         env:
