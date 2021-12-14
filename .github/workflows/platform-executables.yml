@@ -28,7 +28,7 @@ jobs:
           - os: ubuntu-latest
             artifact_name: deb/${{ github.event.inputs.formula }}_${{ needs.get-tag.outputs.TAG_NAME }}-1_amd64.deb
             asset_name: ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.deb
-            command_name: sudo npx oclif-dev pack:deb
+            command_name: npx oclif-dev pack:deb
           - os: macos-latest
             artifact_name: macos/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}.pkg
             asset_name: ${{ github.event.inputs.formula }}-${{ needs.get-tag.outputs.TAG_NAME }}.pkg
