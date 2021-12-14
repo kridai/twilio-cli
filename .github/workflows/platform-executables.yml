@@ -18,6 +18,9 @@ jobs:
         git fetch --prune --unshallow
         echo "::set-output name=TAG_NAME::$(git describe --tags $(git rev-list --tags --max-count=1))"
   platform-executables-release:
+    defaults:
+      run:
+        shell: bash
     name: Publish for ubuntu
     runs-on: ubuntu-latest
     needs: [get-tag]
