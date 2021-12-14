@@ -42,8 +42,8 @@ jobs:
             limit-access-to-actor: true
       - run: |
           make install
-          sudo chown -R 1001:121 "/root/.npm"
-          sudo npx oclif-dev pack:deb
+          npm install -g @oclif/dev-cli
+          oclif-dev pack:deb
       - name: Upload binaries to release
         run: node .github/scripts/update-platform-executables.js
         env:
