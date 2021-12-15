@@ -11,11 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        with:
-          sudo: true
-          limit-access-to-actor: true
       - name: Getting latest tag
         id: get-tag
         run: |
@@ -23,8 +18,7 @@ jobs:
          echo "::set-output name=TAG_NAME::$(git describe --tags $(git rev-list --tags --max-count=1))"
       - run: |
           make install
-          npm install -g @oclif/dev-cli
-          sudo oclif-dev pack:deb
+          sudo $(npm bin)/oclif-dev pack:deb
       - name: Upload binaries to release
         run: node .github/scripts/update-platform-executables.js
         env:
