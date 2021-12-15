@@ -18,7 +18,8 @@ jobs:
          echo "::set-output name=TAG_NAME::$(git describe --tags $(git rev-list --tags --max-count=1))"
       - run: |
           make install
-          sudo $(npm bin)/oclif-dev pack:deb
+          npm install -g @oclif/dev-cli
+          sudo oclif-dev pack:deb
       - name: Upload binaries to release
         run: node .github/scripts/update-platform-executables.js
         env:
