@@ -50,10 +50,6 @@ jobs:
         run: source .github/scripts/trigger-and-wait.sh
         env:
           INPUT_WORKFLOW_FILE_NAME: rpmbuild.yml
-      - name: Wait for RPM Build
-        run: source .github/scripts/trigger-and-wait.sh
-        env:
-          INPUT_WORKFLOW_FILE_NAME: rpmbuild.yml
   notify-complete-success:
     needs: [ wait-for-releases ]
     name: Notify Release Completed
