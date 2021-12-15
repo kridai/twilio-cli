@@ -18,18 +18,23 @@ jobs:
         git fetch --prune --unshallow
         echo "::set-output name=TAG_NAME::$(git describe --tags $(git rev-list --tags --max-count=1))"
   pack-macos:
+    env:
+      OSX_INSTALLER_CERT_BASE64: ${{ secrets.OSX_INSTALLER_CERT_BASE64}}
+      OSX_INSTALLER_CERT_PASSWORD: ${{ secrets.OSX_INSTALLER_CERT_PASSWORD}}
+      APPLE_ID: ${{ secrets.APPLE_ID}}
+      APPLE_ID_APP_PASSWORD: ${{ secrets.APPLE_ID_APP_PASSWORD}}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID}}
+      FILE_PATH: dist/macos/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}.pkg
     needs: [get-tag]
     runs-on: macos-11
     steps:
     - uses: actions/checkout@v2
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      with:
+        sudo: true
+        limit-access-to-actor: true
     - run: source .github/scripts/pack_macos.sh
-      env:
-        OSX_INSTALLER_CERT_BASE64: ${{ secrets.OSX_INSTALLER_CERT_BASE64}}
-        OSX_INSTALLER_CERT_PASSWORD: ${{ secrets.OSX_INSTALLER_CERT_PASSWORD}}
-        APPLE_ID: ${{ secrets.APPLE_ID}}
-        APPLE_ID_APP_PASSWORD: ${{ secrets.APPLE_ID_APP_PASSWORD}}
-        APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID}}
-        FILE_PATH: dist/macos/${{ github.event.inputs.formula }}-v${{ needs.get-tag.outputs.TAG_NAME }}.pkg
     - name: Upload binaries to release
       run: node .github/scripts/update-platform-executables.js
       env:
