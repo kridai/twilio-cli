@@ -38,10 +38,6 @@ jobs:
         run: source .github/scripts/trigger-and-wait.sh
         env:
           INPUT_WORKFLOW_FILE_NAME: debian-executable-release.yml
-      - name: Wait for macos executables Release
-        run: source .github/scripts/trigger-and-wait.sh
-        env:
-          INPUT_WORKFLOW_FILE_NAME: macos-executable-release.yml
       - name: Wait for windows executables Release
         run: source .github/scripts/trigger-and-wait.sh
         env:
@@ -50,6 +46,10 @@ jobs:
         run: source .github/scripts/trigger-and-wait.sh
         env:
           INPUT_WORKFLOW_FILE_NAME: rpmbuild.yml
+      - name: Wait for macos executables Release
+        run: source .github/scripts/trigger-and-wait.sh
+        env:
+          INPUT_WORKFLOW_FILE_NAME: macos-executable-release.yml
   notify-complete-success:
     needs: [ wait-for-releases ]
     name: Notify Release Completed
