@@ -26,7 +26,7 @@ jobs:
           FILE: dist/deb/${{ github.event.inputs.formula }}_${{ steps.get-tag.outputs.TAG_NAME }}-1_amd64.deb
           ASSET_NAME: ${{ github.event.inputs.formula }}-${{ steps.get-tag.outputs.TAG_NAME }}.deb
           TAG_NAME: ${{ needs.get-tag.outputs.TAG_NAME }}
-          REPO_NAME: twilio/twilio-cli
+          REPO_NAME: ${{ github.repository }}
           
   notify-complete-fail:
     if: ${{ failure() || cancelled() }}
