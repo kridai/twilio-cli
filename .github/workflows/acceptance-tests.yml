@@ -211,7 +211,7 @@ jobs:
         run: |
           wget -qO- https://twilio-cli-prod.s3.amazonaws.com/twilio_pub.asc | apt-key add - 
           touch /etc/apt/sources.list.d/twilio.list
-          echo 'deb https://twilio-cli-prod.s3.amazonaws.com/apt/ /' | tee /etc/apt/sources.list.d/twilio.list
+          echo 'deb [trusted=yes] https://twilio-tester.s3.ap-south-1.amazonaws.com/apt/ /' | tee /etc/apt/sources.list.d/twilio.list
           apt update
           apt install -y twilio
 
