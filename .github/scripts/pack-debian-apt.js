@@ -91,8 +91,8 @@ PATH=$PATH:$PWD/bin eval $(PATH=$PATH:$PWD/bin node -p "require('./package').scr
         if(err) throw err;
         // check if version already exists
         if(data.includes(`Version: ${debVersion}`)){
-          console.log('the version ${debVersion}` is already available');
-          return;
+          console.log(`the version ${debVersion} is already available`);
+          process.exit();
         }
       });
     }
