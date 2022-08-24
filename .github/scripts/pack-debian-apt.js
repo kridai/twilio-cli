@@ -86,7 +86,7 @@ PATH=$PATH:$PWD/bin eval $(PATH=$PATH:$PWD/bin node -p "require('./package').scr
     try {
       // fetch existing Packages file which needs to be modified for new version
       await qq.x(`aws s3 cp s3://${pjson.oclif.update.s3.bucket}/apt/Packages Packages`, {cwd: dist, reject: false});
-      const content = readFileSync("Packages");
+      const content = fs.readFileSync("Packages");
       fs.readFile('Packages', function (err, data) {
         if(err) throw err;
         // check if version already exists
