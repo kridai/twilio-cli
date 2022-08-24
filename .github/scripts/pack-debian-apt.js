@@ -92,12 +92,13 @@ PATH=$PATH:$PWD/bin eval $(PATH=$PATH:$PWD/bin node -p "require('./package').scr
         // check if version already exists
         if(data.includes(`Version: ${debVersion}`)){
           console.log('the version ${debVersion}` is already available');
-          return
+          return;
         }
       });
     }
     catch(error) {
       console.log(`Cannot retrieve Packages file due to error: ${error} `);
+      throw error;
     }
     for (const a of arch) {
       await build(a);
