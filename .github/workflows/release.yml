@@ -63,10 +63,10 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: verify release required
         if: ${{steps.semantic-release.outputs.TAG_NAME == ''}}
-        uses: actions/github-script@v3
-        with:
-          script: |
-            core.setFailed('There are no relevant changes, so no new version is released.')
+          uses: actions/github-script@v3
+            with:
+              script: |
+                core.setFailed('There are no relevant changes, so no new version is released.')
       - name: Update release
         run: node .github/scripts/update-release.js
         env:
@@ -143,6 +143,10 @@ jobs:
     env:
         REPO_NAME: ${{ github.repository }}
         REPO_ACCESS_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+    executable_matrix:
+      strategy:
+      matrix:
+        executable_workflow: ['debian-executable-release.yml', 'macos-executable-release.yml', 'rpmbuild.yml', 'windows-executable-release.yml', 'apt-release.yml']
     steps:
       - name: Checkout cli repo
         uses: actions/checkout@v2
@@ -152,19 +156,11 @@ jobs:
       - name: Extract branch name
         id: extract_branch
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      - name: Invoke debian executable workflow
+      - name: Invoke workflow
         if: ${{needs.release.outputs.tag-name != '' && steps.extract_branch.outputs.branch == 'main'}}
         run: node .github/scripts/trigger-workflow.js
         env:
-          WORKFLOW_NAME: 'debian-executable-release.yml'
-          BRANCH_NAME: ${{steps.extract_branch.outputs.branch}}
-
-      - name: Invoke macos package release workflow
-        if: ${{needs.release.outputs.tag-name != '' && steps.extract_branch.outputs.branch == 'main'}}
-        #TODO make changes to trigger-workflow script to accept multiple workflow names at once
-        run: node .github/scripts/trigger-workflow.js
-        env:
-          WORKFLOW_NAME: 'macos-executable-release.yml'
+          WORKFLOW_NAME: ${{ matrix.executable_workflow }}
           BRANCH_NAME: ${{steps.extract_branch.outputs.branch}}
 
 
