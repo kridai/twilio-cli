@@ -56,7 +56,7 @@ jobs:
           git pull
           make install
       - name: verify release required
-        if: ${{false}}
+        if: ${{true}}
         uses: actions/github-script@v3
         with:
               script: |
