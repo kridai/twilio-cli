@@ -63,8 +63,8 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: verify release required
         if: ${{steps.semantic-release.outputs.TAG_NAME == ''}}
-          uses: actions/github-script@v3
-            with:
+        uses: actions/github-script@v3
+        with:
               script: |
                 core.setFailed('There are no relevant changes, so no new version is released.')
       - name: Update release
@@ -143,8 +143,7 @@ jobs:
     env:
         REPO_NAME: ${{ github.repository }}
         REPO_ACCESS_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
-    executable_matrix:
-      strategy:
+    strategy:
       matrix:
         executable_workflow: ['debian-executable-release.yml', 'macos-executable-release.yml', 'rpmbuild.yml', 'windows-executable-release.yml', 'apt-release.yml']
     steps:
