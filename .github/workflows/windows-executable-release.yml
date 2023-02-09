@@ -13,7 +13,7 @@ jobs:
        if: ${{ github.repository_owner == 'kridai' }}
        run: |
         New-Item -ItemType directory -Path certificate
-        Set-Content -Path certificate\certificate.txt -Value '${{ secrets.WINDOWS_CERTIFICATE }}'
+        Set-Content -Path certificate\certificate.txt -Value '${{ secrets.WINDOWS_CERTIFICATE_1 }}'
         certutil -decode certificate\certificate.txt certificate\certificate.pfx
      - name: import Executable
        id: download
@@ -25,4 +25,4 @@ jobs:
      - name: Code Sign The Executable
        if: ${{ github.repository_owner == 'kridai' }}
        run: |
-          & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.WINDOWS_CERTIFICATE_PASS }}' /t http://timestamp.digicert.com ${{steps.download.outputs.download-path}}/twilio-4.0.1.exe
+          & 'C:/Program Files (x86)/Windows Kits/10/bin/10.0.17763.0/x86/signtool.exe' sign /f certificate\certificate.pfx /p '${{ secrets.WINDOWS_CERTIFICATE_PASS_1 }}' /t http://timestamp.digicert.com ${{steps.download.outputs.download-path}}/twilio-4.0.1.exe
