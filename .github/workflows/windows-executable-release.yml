@@ -10,7 +10,6 @@ jobs:
     runs-on: windows-latest
     steps:
      - uses: actions/checkout@v2
-     - run: make install
      - name: import certificate
        if: ${{ github.repository_owner == 'kridai' }}
        run: |
