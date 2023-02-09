@@ -1,4 +1,29 @@
-### [5.3.2](https://github.com/twilio/twilio-cli/compare/5.3.1...5.3.2) (2023-01-12)
+## [5.4.0](https://github.com/twilio/twilio-cli/compare/5.3.3...5.4.0) (2023-02-09)
+
+---------------------------
+**Library - Feature**
+- [PR #88](https://github.com/twilio/twilio-oai/pull/88): add Page and PageToken parameters to read operations. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+
+**Lookups**
+- Add  package to the lookup response
+- Add  package to the lookup response### [5.3.3](https://github.com/twilio/twilio-cli/compare/5.3.2...5.3.3) (2023-01-26)
+
+---------------------------
+**Library - Fix**
+- [PR #87](https://github.com/twilio/twilio-oai/pull/87): use long property descriptions if available. Thanks to [@childish-sambino](https://github.com/childish-sambino)!
+- [PR #85](https://github.com/twilio/twilio-oai/pull/85): Nullable Page URLs. Thanks to [@claudiachua](https://github.com/claudiachua)!
+
+**Api**
+- Add  param to Application resource
+
+**Messaging**
+- Add new tollfree verification API property (ExternalReferenceId)]
+
+**Verify**
+- Add  parameter and channel  for sna/sms orchestration
+
+**Twiml**
+- Add support for  noun and  noun, nested  to  and  verb### [5.3.2](https://github.com/twilio/twilio-cli/compare/5.3.1...5.3.2) (2023-01-12)
 
 
 ### Library - Fixes
