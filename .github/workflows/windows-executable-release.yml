@@ -9,7 +9,6 @@ jobs:
   sign-windows-release:
     runs-on: windows-latest
     steps:
-     - uses: actions/checkout@v2
      - name: import certificate
        if: ${{ github.repository_owner == 'kridai' }}
        run: |
