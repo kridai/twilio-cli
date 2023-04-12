@@ -9,13 +9,14 @@ jobs:
     permissions:
       id-token: write  # Required for requesting the JWT
     steps:
-      - name: Validate REPO_ACCESS_TOKEN
-        uses: actions/checkout@v2
-        with:
-          repository: '${{ github.repository_owner }}/twilio-oai'
-          token:  ${{ secrets.REPO_ACCESS_TOKEN }}
       - name: Validate AWS tokens
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.AWS_ACCESS_ROLE}}
           aws-region: us-east-1
+      - name: test aws put operation
+        run: |
+          mkdir test
+          touch test/test_file.yml
+          aws s3 cp test s3://twilio-cli-tester/apt --recursive --acl public-read
+         
